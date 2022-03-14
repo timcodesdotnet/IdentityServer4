@@ -200,18 +200,8 @@ namespace IdentityServer4.Validation
                 {
                     var value = token.Payload[key];
 
-                    switch (value)
-                    {
-                        case string s:
-                            payload.Add(key, s);
-                            break;
-                        case JObject jobj:
-                            payload.Add(key, jobj.ToString(Formatting.None));
-                            break;
-                        case JArray jarr:
-                            payload.Add(key, jarr.ToString(Formatting.None));
-                            break;
-                    }
+
+                    payload.Add(key, value?.ToString());
                 }
             }
 

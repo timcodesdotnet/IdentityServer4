@@ -332,7 +332,7 @@ namespace IdentityServer.IntegrationTests.Common
                 responseMode: responseMode,
                 codeChallenge: codeChallenge,
                 codeChallengeMethod: codeChallengeMethod,
-                extra: Parameters.FromObject(extra));
+                extra: extra);
             return url;
         }
 

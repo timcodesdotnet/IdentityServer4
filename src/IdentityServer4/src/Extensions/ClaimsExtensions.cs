@@ -1,4 +1,4 @@
-﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
+// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
@@ -47,6 +47,31 @@ namespace IdentityServer4.Extensions
             }
 
             return d;
+        }
+
+        public static IEnumerable<object> ToObjectArray(this IEnumerable<Claim> claims)
+            => claims.Select(q => ToObject(q));
+
+        public static object ToObject(this Claim claim)
+        {
+            return claim.Type switch
+            {
+                ClaimValueTypes.Boolean
+                    => bool.Parse(claim.Value),
+                ClaimValueTypes.Integer or ClaimValueTypes.Integer32
+                    => int.Parse(claim.Value),
+                ClaimValueTypes.Integer64
+                    => long.Parse(claim.Value),
+                ClaimValueTypes.Double
+                    => double.Parse(claim.Value),
+                ClaimValueTypes.UInteger32
+                    => uint.Parse(claim.Value),
+                ClaimValueTypes.UInteger64
+                    => ulong.Parse(claim.Value),
+                IdentityServerConstants.ClaimValueTypes.Json
+                    => JsonSerializer.Deserialize<JsonElement>(claim.Value),
+                _ => claim.Value,
+            };
         }
 
         private static object GetValue(Claim claim)
