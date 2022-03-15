@@ -1,6 +1,6 @@
 // Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
-
+// Modified by TimCodes.NET
 
 using System;
 using System.Collections.Generic;
@@ -107,12 +107,12 @@ namespace IdentityServer.UnitTests.ResponseHandling.AuthorizeInteractionResponse
 
 
         [Fact]
-        public void ProcessConsentAsync_NullRequest_Throws()
+        public async void ProcessConsentAsync_NullRequest_Throws()
         {
             Func<Task> act = () => _subject.ProcessConsentAsync(null, new ConsentResponse());
 
-            act.Should().Throw<ArgumentNullException>()
-                .And.ParamName.Should().Be("request");
+            var assertions = await act.Should().ThrowAsync<ArgumentNullException>();
+            assertions.And.ParamName.Should().Be("request");
         }
         
         [Fact]
@@ -131,7 +131,7 @@ namespace IdentityServer.UnitTests.ResponseHandling.AuthorizeInteractionResponse
         }
 
         [Fact]
-        public void ProcessConsentAsync_PromptModeIsLogin_Throws()
+        public async void ProcessConsentAsync_PromptModeIsLogin_Throws()
         {
             RequiresConsent(true);
             var request = new ValidatedAuthorizeRequest()
@@ -146,12 +146,12 @@ namespace IdentityServer.UnitTests.ResponseHandling.AuthorizeInteractionResponse
 
             Func<Task> act = () => _subject.ProcessConsentAsync(request);
 
-            act.Should().Throw<ArgumentException>()
-                .And.Message.Should().Contain("PromptMode");
+            var assertions = await act.Should().ThrowAsync<ArgumentException>();
+            assertions.And.Message.Should().Contain("PromptMode");
         }
 
         [Fact]
-        public void ProcessConsentAsync_PromptModeIsSelectAccount_Throws()
+        public async void ProcessConsentAsync_PromptModeIsSelectAccount_Throws()
         {
             RequiresConsent(true);
             var request = new ValidatedAuthorizeRequest()
@@ -166,8 +166,8 @@ namespace IdentityServer.UnitTests.ResponseHandling.AuthorizeInteractionResponse
 
             Func<Task> act = () => _subject.ProcessConsentAsync(request);
 
-            act.Should().Throw<ArgumentException>()
-                .And.Message.Should().Contain("PromptMode");
+            var assertions = await act.Should().ThrowAsync<ArgumentException>();
+            assertions.And.Message.Should().Contain("PromptMode");
         }
 
 

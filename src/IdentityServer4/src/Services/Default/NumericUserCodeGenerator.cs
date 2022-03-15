@@ -1,6 +1,6 @@
 // Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
-
+// Modified by TimCodes.NET
 
 using System;
 using System.Security.Cryptography;
@@ -48,7 +48,7 @@ namespace IdentityServer4.Services
 
             var uint32Buffer = new byte[8];
 
-            using (var rng = new RNGCryptoServiceProvider())
+            using (var rng = RandomNumberGenerator.Create())
             {
                 while (true)
                 {

@@ -1,6 +1,6 @@
 // Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
-
+// Modified by TimCodes.NET
 
 using System;
 using System.Collections.Generic;
@@ -200,18 +200,8 @@ namespace IdentityServer4.Validation
                 {
                     var value = token.Payload[key];
 
-                    switch (value)
-                    {
-                        case string s:
-                            payload.Add(key, s);
-                            break;
-                        case JObject jobj:
-                            payload.Add(key, jobj.ToString(Formatting.None));
-                            break;
-                        case JArray jarr:
-                            payload.Add(key, jarr.ToString(Formatting.None));
-                            break;
-                    }
+
+                    payload.Add(key, value?.ToString());
                 }
             }
 
